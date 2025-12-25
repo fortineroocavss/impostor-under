@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impostor del Under - Rageylo Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            background: #0a0a0a; 
+            color: #e0e0e0; 
+            padding: 20px; 
+        }
+
+        h1 { 
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 2.5rem;
+            color: #ffffff; 
+            text-transform: uppercase; 
+            letter-spacing: 4px; 
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(233, 30, 99, 0.8), 2px 2px 5px #000;
+        }
+
+        .card { 
+            background: #141414; 
+            border: 1px solid #333; 
+            border-radius: 20px; 
+            padding: 30px; 
+            max-width: 600px; 
+            margin: 40px auto; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+        
+        button { 
+            background: #1a1a1a; 
+            border: 2px solid #e91e63; 
+            color: white; 
+            padding: 14px 28px; 
+            margin: 10px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-size: 15px; 
+            font-weight: bold; 
+            text-transform: uppercase;
+            transition: 0.2s; 
+            box-shadow: 0 4px 0px #880e4f;
+        }
+
+        button:hover { 
+            background: #e91e63;
+            transform: translateY(-3px); 
+            box-shadow: 0 0 15px rgba(233, 30, 99, 0.5), 0 6px 0px #880e4f;
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0px #880e4f;
+        }
+
+        .btn-secundario {
+            background: #2a2a2a !important;
+            border-color: #555 !important;
+            box-shadow: 0 4px 0px #111 !important;
+        }
+
+        input, select { 
+            padding: 12px; margin: 10px; border-radius: 10px; border: 1px solid #333; 
+            width: 85%; background: #1f1f1f; color: white; outline: none;
+        }
+
+        .hidden { display: none; }
+        .secret-box { font-size: 32px; font-weight: bold; color: #00ffcc; margin: 20px 0; }
+        
+        .artist-img { 
+            width: 280px; height: 280px; object-fit: cover; border-radius: 20px; 
+            border: 4px solid #e91e63; margin-bottom: 15px;
+        }
+
+        .impostor-text { 
+            color: #ff4444; 
+            text-shadow: 0 0 15px rgba(255, 68, 68, 0.5); 
+            font-size: 30px; 
+            font-weight: 900; 
+            font-family: 'Orbitron';
+            margin-top: 15px;
+        }
+
+        .player-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 10px; }
+    </style>
+</head>
+<body>
+
+    <div id="setup" class="card">
+        <h1>IMPOSTOR DEL UNDER</h1>
+        <p>Jugadores (separados por coma):</p>
+        <input type="text" id="playerNames" placeholder="Escribe los nombres">
+        <p>¿Cuántos impostores?</p>
+        <input type="number" id="impostorCount" value="1" min="1">
+        <p>Categoría:</p>
+        <select id="category">
+            <option value="nacional">UNDER ARGENTINO</option>
+            <option value="internacional">UNDER INTERNACIONAL🌎</option>
+        </select>
+        <br><br>
+        <button onclick="playClick(); startGame()">JUGAR</button>
+    </div>
+
+    <div id="game" class="card hidden">
+        <h2 style="font-family: 'Orbitron'; font-size: 1.2rem;">Turno de los jugadores</h2>
+        <div id="playerButtons" class="player-grid"></div>
+        <br>
+        <button onclick="playClick(); startGame()">VOLVER A JUGAR</button>
+        <button class="btn-secundario" onclick="playClick(); irAMenu()">CAMBIAR AJUSTES</button>
+    </div>
+
+    <div id="reveal" class="card hidden">
+        <h2 id="currentPlayerName" style="font-family: 'Orbitron'; color: #e91e63;"></h2>
+        <div id="secretWord" class="secret-box"></div>
+        <button onclick="playClick(); backToGame()">YA LO VI (OCULTAR)</button>
+    </div>
+
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playClick() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+
+        const data = {
+            nacional: [
+                { name: "enzocerobulto", img: "https://i.postimg.cc/Gt8gDdX3/Captura-de-pantalla-2025-12-24-222000.png" },
+                { name: "cero*", img: "https://images.genius.com/89341d9a7fd370ea3d9c4fdd9da534c1.955x955x1.jpg" },
+                { name: "LoLo", img: "https://images.genius.com/3326aa6a0dafae6a4d5b537c58024724.1000x1000x1.jpg" },
+                { name: "Frozouda", img: "https://i.postimg.cc/L4Lbm6g3/FRO-2-DISPONIBLE-EN-TODO-EL-MUNDO-lasreconciliaciones-EXISTEN.jpg" },
+                { name: "Zell", img: "https://images.genius.com/b882b7173c3dd73eb59c69a5d6bb3195.767x767x1.jpg" },
+                { name: "Bic", img: "https://i.scdn.co/image/ab6761610000e5ebb54a9d616d9623597caf569d" },
+                { name: "Choosey", img: "https://i.postimg.cc/HWzbwfqM/nou-kap.webp" },
+                { name: "Stiffy", img: "https://i.scdn.co/image/ab67616100005174ca976dc555059fa8321e672f" },
+                { name: "AgusFortnite2008", img: "https://images.genius.com/14d07d12fa5c59b66c18ccd78d4dc4ed.1000x1000x1.png" },
+                { name: "Joshu Joshu", img: "https://akamai.sscdn.co/uploadfile/letras/fotos/e/4/8/9/e489a3d08fad665e2ec3cf8e49e4a94c.jpg" },
+                { name: "ISMALDZ", img: "https://i.postimg.cc/wTJyWZPF/nuevo-video-en-breveeeeee-2037.jpg" },
+                { name: "huntr", img: "https://i.postimg.cc/rs96s8sQ/Captura-de-pantalla-2025-12-24-223945.png" },
+                { name: "Little Boogie", img: "https://i.postimg.cc/0QdXdVsV/Seran-angeles-o-demonios-todas-estas-voces.jpg" },
+                { name: "Magnesio", img: "https://i.postimg.cc/YCGXyr7z/Captura-de-pantalla-2025-12-24-224313.png" },
+                { name: "Pabloxo", img: "https://images.genius.com/cd02d950f7ec4221a876531847d9cd7d.1000x1000x1.jpg" },
+                { name: "TooYugan", img: "https://i.scdn.co/image/ab6761610000e5eb74a776c6799a7e3a541aadff" },
+                { name: "Saramalacara", img: "https://i1.sndcdn.com/avatars-c8xXcz8MF86Xly9U-LecIyw-t1080x1080.jpg" },
+                { name: "SixUp", img: "https://i.scdn.co/image/ab6761610000e5ebbf877a11d26f93d179cc6a18" },
+                { name: "Turrobaby", img: "https://streetartlatam.s3.us-east-1.amazonaws.com/production/Turrobaby_pilar_de_la_nueva_escena_del_genero_urbano_argentino_192c29249f.jpg" },
+                { name: "Shako", img: "https://i.postimg.cc/L6rk5zdg/anhelostudios-anhelostudios-ge.jpg" },
+                { name: "Clúster", img: "https://images.genius.com/7edaae77b7f3aa31b932954ba50e6fce.542x542x1.png" },
+                { name: "Polus", img: "https://i.postimg.cc/G2HJ9zpV/get.jpg" },
+                { name: "Vahel", img: "https://i.postimg.cc/XN5dhrBB/533418608-17881435881364809-3823578737294317030-n.jpg" },
+                { name: "Blagh", img: "https://cdn-images.dzcdn.net/images/cover/750d3fd0259fbf8846a2d862040d8477/1900x1900-000000-80-0-0.jpg" },
+                { name: "Jugo", img: "https://i.scdn.co/image/ab6761610000e5eb1d2d1249588f2711a9063a39" },
+                { name: "143leti", img: "https://images.genius.com/0ded9119574cba694ed1755c030e482b.1000x1000x1.png" },
+                { name: "salasflaco", img: "https://i.postimg.cc/Kzgzjp6b/channels4-profile.jpg" },
+                { name: "Hellolola", img: "https://i.postimg.cc/vB9Ybgnn/channels4-profile-(1).jpg" },
+                { name: "panchitolefleur", img: "https://i1.sndcdn.com/avatars-HcU1cc6L0enEflCQ-53xxDw-t1080x1080.jpg" },
+                { name: "Nykoo0", img: "https://i.postimg.cc/VLLstTwf/574186866-18096188749801792-4009584160816206924-n.jpg" },
+                { name: "Hepa", img: "https://i.postimg.cc/sXrsgHmq/541597304-18477601273076861-1456195632179985994-n.jpg" },
+                { name: "2UU!", img: "https://i.postimg.cc/qv6TXH5p/Se-va-un-2025-lleno-de-emociones-lleno-de-cosas-increibles-conoci-muchas-provincias-de-argenti.jpg" }
+            ],
+            internacional: [
+                { name: "Cybernene", img: "https://i.scdn.co/image/ab6761610000e5eb89de19647487810a7a70b873" },
+                { name: "Bbtrickz", img: "https://highxtar.com/wp-content/uploads/2023/11/highxtar-bb-trickz-1-1440x1080.jpg" },
+                { name: "Playboi Carti", img: "https://cdn-images.dzcdn.net/images/artist/b90097972a60d9d8598a79a786be1a3a/1900x1900-000000-81-0-0.jpg" },
+                { name: "Che", img: "https://vmagazine.com/wp-content/uploads/2025/07/IMG_5552.jpeg" },
+                { name: "Chief Keef", img: "https://d2umolmz9zcmr8.cloudfront.net/unsafe/2560x0/filters:no_upscale():quality(60)/contentmedia%2Fff98540f-7643-42e8-b16e-7a3a8678fa03.jpg" },
+                { name: "Kanye West", img: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Kanye_West_at_the_2009_Tribeca_Film_Festival_%28crop_2%29.jpg" },
+                { name: "2hollis", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/2Hollis.jpg/250px-2Hollis.jpg" },
+                { name: "Nettspend", img: "https://i.scdn.co/image/ab676161000051746bc255a221b2d2db4c1de21f" },
+                { name: "Rojuu", img: "https://i.scdn.co/image/ab6761610000e5eb0d5f7931593af45b92981acc" },
+                { name: "Osamason", img: "https://osamasonmerch.com/wp-content/uploads/2024/03/Osamason-Merch-2.jpg" },
+                { name: "Michael Jackson", img: "https://www.65ymas.com/uploads/s1/11/85/81/michael-jackson-portada-bad.jpeg" },
+                { name: "Wiz Khalifa", img: "https://i.scdn.co/image/ab6761610000e5ebc66b0a8c3268f0b6556f64a8" },
+                { name: "Sa!koro", img: "https://images.genius.com/c2e1b9704d362f2826af42e98a878d96.500x500x1.png" },
+                { name: "Underaiki", img: "https://scontent-eze1-2.xx.fbcdn.net/v/t39.30808-6/486639178_633976302771007_2613972792807470574_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=104&cb2=99be929b-bd9a46d7&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeGGZUoTNSkW_1yBX_JzKH0y1NAMjJJCsGDU0AyMkkKwYEsE9QKm5PPYCd-d0igodt-_sAOmaMQ8kLTUsqtehwDb&_nc_ohc=vPng9le8snoQ7kNvwGl7kIh&_nc_oc=Adk0swLE-NwCfGFKeVp8Y8AtqHcMyN3dq2P6QLfc0T0BLFLilZyxQuABgZi1XQ9ofY8&_nc_zt=23&_nc_ht=scontent-eze1-2.xx&_nc_gid=RqsHYYCZr4TXpm5RR8VQCA&oh=00_AfkRuQIew_632EuKD7rlcFXE8eHyisICjw8BwTvUMDMY0A&oe=6952482B" },
+                { name: "Laurasad", img: "https://i.postimg.cc/htdkQbX7/q-loko-q-ta-mi-vasitoooooooooo.jpg" },
+                { name: "Francis Jeremy", img: "https://i.scdn.co/image/ab67616d00001e02765fe3d4cdb634f95b9aab19" },
+                { name: "HWII", img: "https://i.postimg.cc/4xrQnq0q/image.jpg" },
+                { name: "xaviersobased", img: "https://cdn-images.dzcdn.net/images/artist/3eca35731a834904e1a07274c7b2222b/1900x1900-000000-80-0-0.jpg" }
+            ]
+        };
+
+        let roles = [];
+        let artistasUsados = { nacional: [], internacional: [] };
+
+        function startGame() {
+            const rawNames = document.getElementById('playerNames').value;
+            const names = rawNames.split(',').map(n => n.trim()).filter(n => n !== "");
+            const numImpostors = parseInt(document.getElementById('impostorCount').value);
+            const cat = document.getElementById('category').value;
+            
+            if (names.length <= numImpostors) {
+                alert("¡Faltan jugadores!");
+                return;
+            }
+
+            let opcionesPosibles = data[cat].filter(a => !artistasUsados[cat].includes(a.name));
+            if (opcionesPosibles.length === 0) {
+                artistasUsados[cat] = [];
+                opcionesPosibles = data[cat];
+            }
+
+            const selectedArtist = opcionesPosibles[Math.floor(Math.random() * opcionesPosibles.length)];
+            artistasUsados[cat].push(selectedArtist.name);
+
+            roles = names.map(name => ({ playerName: name, artistName: selectedArtist.name, img: selectedArtist.img, isImpostor: false, seen: false }));
+
+            let assigned = 0;
+            while (assigned < numImpostors) {
+                let idx = Math.floor(Math.random() * roles.length);
+                if (!roles[idx].isImpostor) {
+                    roles[idx].isImpostor = true;
+                    assigned++;
+                }
+            }
+
+            renderButtons();
+            document.getElementById('setup').classList.add('hidden');
+            document.getElementById('reveal').classList.add('hidden');
+            document.getElementById('game').classList.remove('hidden');
+        }
+
+        function renderButtons() {
+            const container = document.getElementById('playerButtons');
+            container.innerHTML = '';
+            roles.forEach((p, index) => {
+                if (!p.seen) {
+                    const btn = document.createElement('button');
+                    btn.innerText = p.playerName;
+                    btn.onclick = () => { playClick(); showSecret(index); };
+                    container.appendChild(btn);
+                }
+            });
+            if (roles.every(p => p.seen)) {
+                container.innerHTML = "<div style='grid-column: 1/-1;'><p>¡Roles repartidos!</p></div>";
+            }
+        }
+
+        function showSecret(index) {
+            const p = roles[index];
+            document.getElementById('currentPlayerName').innerText = p.playerName;
+            const wordEl = document.getElementById('secretWord');
+            
+            if (p.isImpostor) {
+                // PEGÁ EL LINK DE TU GIF ABAJO DONDE DICE TU_LINK_AQUÍ
+                wordEl.innerHTML = `
+                    <img src="https://cdn.betterttv.net/emote/5ccc411b152e896edf4acbd4/3x.gif" 
+                         style="width:250px; border-radius:15px; border: 3px solid #ff4444; box-shadow: 0 0 20px #ff4444;">
+                    <div class="impostor-text">ERES EL IMPOSTOR</div>
+                `;
+            } else {
+                wordEl.innerHTML = `
+                    <p style="font-size:16px; color:#aaa;">Sos:</p>
+                    <img src="${p.img}" class="artist-img" alt="Foto"><br>
+                    <span style="font-family:'Orbitron'; color:#00ffcc;">${p.artistName}</span>
+                `;
+            }
+
+            p.seen = true;
+            document.getElementById('game').classList.add('hidden');
+            document.getElementById('reveal').classList.remove('hidden');
+        }
+
+        function backToGame() {
+            document.getElementById('reveal').classList.add('hidden');
+            document.getElementById('game').classList.remove('hidden');
+            renderButtons();
+        }
+
+        function irAMenu() {
+            document.getElementById('game').classList.add('hidden');
+            document.getElementById('setup').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

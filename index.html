@@ -3,142 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Impostor del Under - Rageylo Edition</title>
-   <link rel="icon" type="image/png" href="https://i.postimg.cc/k51D1wYF/4x-(1).avif">
+    <title>Impostor del Under - Premium Beta</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/k51D1wYF/4x-(1).avif">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
-    
     <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            text-align: center; 
-            background: #0a0a0a; 
-            color: #e0e0e0; 
-            padding: 20px; 
-        }
-
-        h1 { 
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 2.5rem;
-            color: #ffffff; 
-            text-transform: uppercase; 
-            letter-spacing: 4px; 
-            margin-bottom: 30px;
-            text-shadow: 0 0 10px rgba(233, 30, 99, 0.8), 2px 2px 5px #000;
-        }
-
-        .card { 
-            background: #141414; 
-            border: 1px solid #333; 
-            border-radius: 20px; 
-            padding: 30px; 
-            max-width: 600px; 
-            margin: 40px auto; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-        }
+        :root { --glow-color: #ff0000; }
+        body { font-family: 'Segoe UI', sans-serif; text-align: center; background: #050505; color: #e0e0e0; padding: 20px; margin: 0; overflow-x: hidden; height: 100vh; display: flex; flex-direction: column; align-items: center; }
         
-        button { 
-            background: #1a1a1a; 
-            border: 2px solid #e91e63; 
-            color: white; 
-            padding: 14px 28px; 
-            margin: 10px; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            font-size: 15px; 
-            font-weight: bold; 
-            text-transform: uppercase;
-            transition: 0.2s; 
-            box-shadow: 0 4px 0px #880e4f;
-        }
+        /* --- FONDO --- */
+        .bg-element { position: fixed; top: 50%; left: 50%; width: 400px; height: 400px; z-index: -1; transform: translate(-50%, -50%); opacity: 0.25; filter: drop-shadow(0 0 10px var(--glow-color)); pointer-events: none; object-fit: contain; }
+        
+        /* --- AJUSTES PREMIUM --- */
+        .settings-btn { position: fixed; top: 25px; right: 25px; background: rgba(15, 15, 15, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); color: white; padding: 10px; border-radius: 50%; cursor: pointer; z-index: 100; font-size: 22px; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); transition: 0.4s; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .settings-btn:hover { transform: rotate(90deg) scale(1.1); border-color: var(--glow-color); box-shadow: 0 0 20px var(--glow-color); }
+        #settings-panel { position: fixed; top: 85px; right: 25px; width: 220px; background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255, 0, 0, 0.3); padding: 20px; border-radius: 20px; z-index: 101; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
+        .preset-btn { font-size: 11px; padding: 12px; width: 100%; margin-bottom: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #bbb; border-radius: 12px; cursor: pointer; transition: 0.3s; font-weight: bold; text-transform: uppercase; }
+        .preset-btn:hover { background: rgba(255, 0, 0, 0.1); border-color: var(--glow-color); color: white; }
 
-        button:hover { 
-            background: #e91e63;
-            transform: translateY(-3px); 
-            box-shadow: 0 0 15px rgba(233, 30, 99, 0.5), 0 6px 0px #880e4f;
-        }
+        /* --- BOTÓN COPIAR --- */
+        .copy-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 6px 12px; border-radius: 10px; font-size: 10px; font-family: 'Orbitron'; cursor: pointer; margin-left: 10px; transition: 0.3s; }
+        .copy-success { background: #28a745 !important; border-color: white !important; box-shadow: 0 0 15px rgba(40, 167, 69, 0.5); }
 
-        button:active {
-            transform: translateY(2px);
-            box-shadow: 0 1px 0px #880e4f;
-        }
+        /* --- UI GENERAL --- */
+        .card { background: rgba(20, 20, 20, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 25px; padding: 30px; max-width: 450px; width: 90%; margin: 20px auto; box-shadow: 0 15px 35px rgba(0,0,0,0.7); }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: #ffffff; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 15px var(--glow-color); }
+        button { background: rgba(26, 26, 26, 0.8); border: 2px solid var(--glow-color); color: white; padding: 14px 28px; margin: 10px; border-radius: 12px; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.2s; box-shadow: 0 4px 0px #800000; width: 85%; }
+        button:hover { background: var(--glow-color); transform: translateY(-2px); box-shadow: 0 0 20px rgba(255, 0, 0, 0.5), 0 6px 0px #800000; }
+        
+        /* BOTÓN ONLINE ROJO */
+        .btn-online { border-color: #8b0000; box-shadow: 0 4px 0px #4a0000; }
+        .btn-online:hover { background: #b30000; border-color: #ff0000; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5), 0 6px 0px #4a0000; }
 
-        .btn-secundario {
-            background: #2a2a2a !important;
-            border-color: #555 !important;
-            box-shadow: 0 4px 0px #111 !important;
-        }
-
-        input, select { 
-            padding: 12px; margin: 10px; border-radius: 10px; border: 1px solid #333; 
-            width: 85%; background: #1f1f1f; color: white; outline: none;
-        }
-
+        input, select { padding: 12px; margin: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); width: 85%; background: rgba(30, 30, 30, 0.8); color: white; text-align: center; }
         .hidden { display: none; }
-        .secret-box { font-size: 32px; font-weight: bold; color: #00ffcc; margin: 20px 0; }
-        
-        .artist-img { 
-            width: 280px; height: 280px; object-fit: cover; border-radius: 20px; 
-            border: 4px solid #e91e63; margin-bottom: 15px;
-        }
-
-        .impostor-text { 
-            color: #ff4444; 
-            text-shadow: 0 0 15px rgba(255, 68, 68, 0.5); 
-            font-size: 30px; 
-            font-weight: 900; 
-            font-family: 'Orbitron';
-            margin-top: 15px;
-        }
-
-        .player-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 10px; }
+        .artist-img { width: 250px; height: 250px; object-fit: cover; border-radius: 20px; border: 4px solid var(--glow-color); margin-top: 15px; }
+        .impostor-text { color: var(--glow-color); font-size: 28px; font-weight: 900; font-family: 'Orbitron'; margin-top: 15px; text-shadow: 0 0 15px rgba(255, 0, 0, 0.6); }
+        .player-tag { margin: 5px; display: inline-block; background: rgba(255, 255, 255, 0.1); padding: 5px 15px; border-radius: 20px; color: #ffffff; font-weight: bold; border: 1px solid rgba(255,255,255,0.2); }
+        .artist-name-display { font-family: 'Orbitron'; color: #ffffff; font-size: 24px; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
     </style>
 </head>
 <body>
 
-    <div id="setup" class="card">
-        <h1>IMPOSTOR DEL UNDER</h1>
-        <p>Jugadores (separados por coma):</p>
-        <input type="text" id="playerNames" placeholder="Escribe los nombres">
-        <p>¿Cuántos impostores?</p>
-        <input type="number" id="impostorCount" value="1" min="1">
-        <p>Categoría:</p>
-        <select id="category">
-            <option value="nacional">UNDER ARGENTINO</option>
-            <option value="internacional">UNDER INTERNACIONAL🌎(Puede contener mainstream)</option>
-        </select>
-        <br><br>
-        <button onclick="playClick(); startGame()">JUGAR</button>
+    <div class="settings-btn" onclick="toggleSettings()">⚙️</div>
+    <div id="settings-panel" class="hidden">
+        <h3 style="font-family:'Orbitron'; font-size:0.7rem; color:#fff;">AJUSTES VISUALES</h3>
+        <div class="preset-grid">
+            <button class="preset-btn" onclick="changeBg('https://i.gifer.com/origin/9f/9f6c9a72c4143f9e7cbc6e4b6253a4e7.gif')">🌿 MARIHUANA</button>
+            <button class="preset-btn" onclick="changeBg('https://i.gifer.com/origin/c3/c3eac7a9248cfb7b27e6803199dc906f.gif')">🥤 DOUBLE CUP</button>
+            <button class="preset-btn" onclick="changeBg('https://i.postimg.cc/qM53PzCM/3dgifmaker86249.gif')">⭐ MATECAPP</button>
+            <button class="preset-btn" onclick="changeBg('https://i.postimg.cc/ZqT4jLYs/3dgifmaker97841.gif')">🏆 GOLDGE</button> 
+        </div>
     </div>
 
-    <div id="game" class="card hidden">
-        <h2 style="font-family: 'Orbitron'; font-size: 1.2rem;">Turno de los jugadores</h2>
-        <div id="playerButtons" class="player-grid"></div>
+    <img id="main-bg" src="https://i.gifer.com/origin/9f/9f6c9a72c4143f9e7cbc6e4b6253a4e7.gif" class="bg-element">
+
+    <div id="menu-inicio" class="card">
+        <h1>IMPOSTOR DEL UNDER</h1>
+        <p style="color:#888;">by FORTINEROCAVS</p>
+        <button onclick="playClick(); navegar('local-setup')">MODO LOCAL</button>
+        <button class="btn-online" onclick="playClick(); navegar('online-setup')">MODO ONLINE</button>
+    </div>
+
+    <div id="local-setup" class="card hidden">
+        <h1>MODO LOCAL</h1>
+        <p>Jugadores (separados por coma):</p>
+        <input type="text" id="playerNames" placeholder="Escribe los nombres">
+        <p>Impostores:</p>
+        <input type="number" id="impostorCount" value="1" min="1">
+        <select id="local-category">
+            <option value="nacional">UNDER ARGENTINO 🇦🇷</option>
+            <option value="internacional">UNDER INTERNACIONAL 🌎</option>
+        </select>
+        <button onclick="playClick(); startGameLocal()">EMPEZAR</button>
+        <br><button onclick="playClick(); navegar('menu-inicio')" style="background:rgba(50,50,50,0.5); border:none; width:auto; font-size:12px;">VOLVER</button>
+    </div>
+
+    <div id="local-game" class="card hidden">
+        <h2 style="font-family:'Orbitron'; font-size:1.1rem;">TURNO DE:</h2>
+        <div id="playerButtonsLocal"></div>
         <br>
-        <button onclick="playClick(); startGame()">VOLVER A JUGAR</button>
-        <button class="btn-secundario" onclick="playClick(); irAMenu()">CAMBIAR AJUSTES</button>
+        <button onclick="playClick(); startGameLocal()" style="background:rgba(255,255,255,0.05); width:auto; font-size:11px;">REPETIR (NUEVO ARTISTA)</button>
+        <button onclick="playClick(); navegar('menu-inicio')" style="background:rgba(50,50,50,0.5); width:auto; font-size:11px;">MENÚ PRINCIPAL</button>
+    </div>
+
+    <div id="online-setup" class="card hidden">
+        <h1>MODO ONLINE</h1>
+        <input type="text" id="playerNameOnline" placeholder="TU APODO">
+        <button onclick="playClick(); hostear()">HOSTEAR PARTIDA</button>
+        <div style="margin: 10px; color:#444;">— O —</div>
+        <input type="text" id="roomCode" placeholder="CÓDIGO DE SALA">
+        <button onclick="playClick(); unirse()">UNIRSE A SALA</button>
+        <br><button onclick="playClick(); navegar('menu-inicio')" style="background:rgba(50,50,50,0.5); border:none; width:auto;">VOLVER</button>
+    </div>
+
+    <div id="lobby" class="card hidden">
+        <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+            <h1 id="display-codigo" style="margin: 0; font-size: 1.5rem;">SALA: ----</h1>
+            <button class="copy-btn" onclick="copiarCodigo()">📋 COPIAR</button>
+        </div>
+        <div id="lista-jugadores" style="margin-bottom: 20px;"></div>
+        <div id="opciones-host" class="hidden">
+            <select id="online-category">
+                <option value="nacional">UNDER ARGENTINO 🇦🇷</option>
+                <option value="internacional">UNDER INTERNACIONAL 🌎</option>
+            </select>
+            <button onclick="playClick(); comenzarJuegoOnline()">EMPEZAR JUEGO</button>
+            <br>
+            <button style="background:rgba(255,0,0,0.2); border-color:#ff0000; font-size:10px; width:auto; margin-top: 10px;" onclick="playClick(); cerrarSala()">ELIMINAR SALA (HOST)</button>
+        </div>
+        <p id="msg-espera">Esperando al host...</p>
+        <button onclick="playClick(); salirDeSala()" style="background:transparent; border:1px solid rgba(255,0,0,0.4); color:rgba(255,255,255,0.5); font-size:10px; width:auto; margin-top:20px; box-shadow:none;">
+            ← ABANDONAR SALA
+        </button>
     </div>
 
     <div id="reveal" class="card hidden">
-        <h2 id="currentPlayerName" style="font-family: 'Orbitron'; color: #e91e63;"></h2>
-        <div id="secretWord" class="secret-box"></div>
-        <button onclick="playClick(); backToGame()">YA LO VI (OCULTAR)</button>
+        <h2 id="currentPlayerDisplay" style="font-family: 'Orbitron'; color: #ff0000;"></h2>
+        <div id="secretWord"></div>
+        <br>
+        <button id="btn-listo-local" class="hidden" onclick="playClick(); volverAlGridLocal()">YA LO VI (OCULTAR)</button>
     </div>
 
-    <script>
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function playClick() {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.1);
-            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.1);
-        }
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set, get, child, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCwvdaZOLQYFPrAj00z9C00fi9L6h3RqQ",
+            authDomain: "impostor-under.firebaseapp.com",
+            databaseURL: "https://impostor-under-default-rtdb.firebaseio.com",
+            projectId: "impostor-under",
+            storageBucket: "impostor-under.firebasestorage.app",
+            messagingSenderId: "817403614820",
+            appId: "1:817403614820:web:27186b698a818fbd56b171"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        window.navegar = (id) => {
+            const pantallas = ['menu-inicio', 'local-setup', 'local-game', 'online-setup', 'lobby', 'reveal'];
+            pantallas.forEach(p => document.getElementById(p).classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+        };
+
+        window.toggleSettings = () => { document.getElementById('settings-panel').classList.toggle('hidden'); };
+        window.changeBg = (url) => { document.getElementById('main-bg').src = url; playClick(); };
+        const clickSound = new Audio("https://www.soundjay.com/buttons/sounds/button-16.mp3");
+        window.playClick = () => { clickSound.currentTime = 0; clickSound.play().catch(()=>{}); };
+
+        window.copiarCodigo = () => {
+            const texto = document.getElementById('display-codigo').innerText.replace("SALA: ", "");
+            navigator.clipboard.writeText(texto).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.innerText = "✅ COPIADO";
+                btn.classList.add('copy-success');
+                setTimeout(() => { btn.innerText = "📋 COPIAR"; btn.classList.remove('copy-success'); }, 2000);
+            });
+            playClick();
+        };
 
         const data = {
             nacional: [
@@ -189,7 +211,7 @@
                 { name: "PACHUDANI🏄‍♂️", img: "https://i.postimg.cc/gkSFQ5HF/descarga-(1).jpg" },
                 { name: "Wiz Khalifa", img: "https://i.scdn.co/image/ab6761610000e5ebc66b0a8c3268f0b6556f64a8" },
                 { name: "Sa!koro", img: "https://images.genius.com/c2e1b9704d362f2826af42e98a878d96.500x500x1.png" },
-                { name: "Underaiki", img: "https://scontent-eze1-2.xx.fbcdn.net/v/t39.30808-6/486639178_633976302771007_2613972792807470574_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=104&cb2=99be929b-bd9a46d7&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeGGZUoTNSkW_1yBX_JzKH0y1NAMjJJCsGDU0AyMkkKwYEsE9QKm5PPYCd-d0igodt-_sAOmaMQ8kLTUsqtehwDb&_nc_ohc=vPng9le8snoQ7kNvwGl7kIh&_nc_oc=Adk0swLE-NwCfGFKeVp8Y8AtqHcMyN3dq2P6QLfc0T0BLFLilZyxQuABgZi1XQ9ofY8&_nc_zt=23&_nc_ht=scontent-eze1-2.xx&_nc_gid=RqsHYYCZr4TXpm5RR8VQCA&oh=00_AfkRuQIew_632EuKD7rlcFXE8eHyisICjw8BwTvUMDMY0A&oe=6952482B" },
+                { name: "Underaiki", img: "https://i.postimg.cc/8PjM29fD/Whats-App-Image-2025-12-25-at-22-07-27.jpg" },
                 { name: "Laurasad", img: "https://i.postimg.cc/htdkQbX7/q-loko-q-ta-mi-vasitoooooooooo.jpg" },
                 { name: "Francis Jeremy", img: "https://i.scdn.co/image/ab67616d00001e02765fe3d4cdb634f95b9aab19" },
                 { name: "HWII", img: "https://i.postimg.cc/4xrQnq0q/image.jpg" },
@@ -197,98 +219,126 @@
             ]
         };
 
-        let roles = [];
-        let artistasUsados = { nacional: [], internacional: [] };
+        let rolesLocal = [];
+        let usadosLocal = { nacional: [], internacional: [] };
 
-        function startGame() {
-            const rawNames = document.getElementById('playerNames').value;
-            const names = rawNames.split(',').map(n => n.trim()).filter(n => n !== "");
-            const numImpostors = parseInt(document.getElementById('impostorCount').value);
-            const cat = document.getElementById('category').value;
-            
-            if (names.length <= numImpostors) {
-                alert("¡Faltan jugadores!");
-                return;
+        window.startGameLocal = () => {
+            const names = document.getElementById('playerNames').value.split(',').map(n=>n.trim()).filter(n=>n!=="");
+            const num = parseInt(document.getElementById('impostorCount').value);
+            const cat = document.getElementById('local-category').value;
+            if(names.length <= num) return alert("Faltan jugadores");
+
+            let disponibles = data[cat].filter(a => !usadosLocal[cat].includes(a.name));
+            if (disponibles.length === 0) { usadosLocal[cat] = []; disponibles = data[cat]; }
+
+            const art = disponibles[Math.floor(Math.random()*disponibles.length)];
+            usadosLocal[cat].push(art.name);
+
+            rolesLocal = names.map(n => ({ playerName: n, artistName: art.name, img: art.img, isImpostor: false, seen: false }));
+            let count = 0; while(count < num) { 
+                let i = Math.floor(Math.random()*rolesLocal.length); 
+                if(!rolesLocal[i].isImpostor) { rolesLocal[i].isImpostor = true; count++; } 
             }
+            renderButtonsLocal();
+            navegar('local-game');
+        };
 
-            let opcionesPosibles = data[cat].filter(a => !artistasUsados[cat].includes(a.name));
-            if (opcionesPosibles.length === 0) {
-                artistasUsados[cat] = [];
-                opcionesPosibles = data[cat];
-            }
-
-            const selectedArtist = opcionesPosibles[Math.floor(Math.random() * opcionesPosibles.length)];
-            artistasUsados[cat].push(selectedArtist.name);
-
-            roles = names.map(name => ({ playerName: name, artistName: selectedArtist.name, img: selectedArtist.img, isImpostor: false, seen: false }));
-
-            let assigned = 0;
-            while (assigned < numImpostors) {
-                let idx = Math.floor(Math.random() * roles.length);
-                if (!roles[idx].isImpostor) {
-                    roles[idx].isImpostor = true;
-                    assigned++;
-                }
-            }
-
-            renderButtons();
-            document.getElementById('setup').classList.add('hidden');
-            document.getElementById('reveal').classList.add('hidden');
-            document.getElementById('game').classList.remove('hidden');
+        function renderButtonsLocal() {
+            const container = document.getElementById('playerButtonsLocal');
+            container.innerHTML = rolesLocal.map((p, i) => p.seen ? '' : `<button onclick="playClick(); showSecretLocal(${i})">${p.playerName}</button>`).join("");
+            if (rolesLocal.every(p => p.seen)) container.innerHTML = "<p style='color:red; font-family:Orbitron;'>¡TODOS LISTOS!</p>";
         }
 
-        function renderButtons() {
-            const container = document.getElementById('playerButtons');
-            container.innerHTML = '';
-            roles.forEach((p, index) => {
-                if (!p.seen) {
-                    const btn = document.createElement('button');
-                    btn.innerText = p.playerName;
-                    btn.onclick = () => { playClick(); showSecret(index); };
-                    container.appendChild(btn);
+        window.showSecretLocal = (i) => {
+            const p = rolesLocal[i]; p.seen = true;
+            document.getElementById('currentPlayerDisplay').innerText = p.playerName;
+            const wordEl = document.getElementById('secretWord');
+            if (p.isImpostor) {
+                wordEl.innerHTML = `<img src="https://cdn.betterttv.net/emote/5ccc411b152e896edf4acbd4/3x.gif" style="width:250px; border-radius:15px; border: 3px solid #ff0000;"><div class="impostor-text">ERES EL IMPOSTOR</div>`;
+            } else {
+                wordEl.innerHTML = `<p style="color:#aaa;">Tu Artista:</p><img src="${p.img}" class="artist-img"><br><span class="artist-name-display">${p.artistName}</span>`;
+            }
+            navegar('reveal');
+            document.getElementById('btn-listo-local').classList.remove('hidden');
+        }
+
+        window.volverAlGridLocal = () => { navegar('local-game'); renderButtonsLocal(); };
+
+        window.hostear = async () => {
+            const nombre = document.getElementById('playerNameOnline').value;
+            if(!nombre) return alert("Escribe tu apodo");
+            const codigo = Math.random().toString(36).substring(2, 6).toUpperCase();
+            await set(ref(db, 'salas/' + codigo), { jugadores: { [nombre]: true } });
+            iniciarLobby(codigo, nombre, true);
+        };
+
+        window.unirse = async () => {
+            const nombre = document.getElementById('playerNameOnline').value;
+            const code = document.getElementById('roomCode').value.toUpperCase();
+            if(!nombre || !code) return alert("Faltan datos");
+            const snap = await get(child(ref(db), `salas/${code}`));
+            if (snap.exists()) {
+                const sala = snap.val();
+                if (Object.keys(sala.jugadores || {}).length >= 10) return alert("Sala llena");
+                await set(ref(db, `salas/${code}/jugadores/${nombre}`), true);
+                iniciarLobby(code, nombre, false);
+            } else alert("No existe la sala");
+        };
+
+        function iniciarLobby(codigo, miNombre, esHost) {
+            navegar('lobby');
+            document.getElementById('display-codigo').innerText = "SALA: " + codigo;
+            if(esHost) document.getElementById('opciones-host').classList.remove('hidden');
+
+            onValue(ref(db, `salas/${codigo}`), (snap) => {
+                if(!snap.exists()) return navegar('menu-inicio');
+                const sala = snap.val();
+                if(sala.jugadores) {
+                    document.getElementById('lista-jugadores').innerHTML = Object.keys(sala.jugadores).map(n => `<span class="player-tag">👤 ${n}</span>`).join("");
+                }
+                if (sala.juego && sala.juego.activa) {
+                    const j = sala.juego;
+                    navegar('reveal');
+                    document.getElementById('currentPlayerDisplay').innerText = miNombre;
+                    const wordEl = document.getElementById('secretWord');
+                    if (j.impostor === miNombre) {
+                        wordEl.innerHTML = `<img src="https://cdn.betterttv.net/emote/5ccc411b152e896edf4acbd4/3x.gif" style="width:250px; border-radius:15px; border: 3px solid #ff0000;"><div class="impostor-text">SOS EL IMPOSTOR</div>`;
+                    } else {
+                        wordEl.innerHTML = `<p style="color:#aaa;">Tu artista:</p><img src="${j.img}" class="artist-img"><br><span class="artist-name-display">${j.artistName}</span>`;
+                    }
+                    if(esHost && !document.getElementById('btn-next')) {
+                        wordEl.innerHTML += `<br><button id="btn-next" onclick="playClick(); reiniciarPartidaOnline()" style="margin-top:20px; width:auto; background:rgba(255,255,255,0.1); border-color:#fff;">NUEVA RONDA</button>`;
+                    }
+                } else {
+                    navegar('lobby');
                 }
             });
-            if (roles.every(p => p.seen)) {
-                container.innerHTML = "<div style='grid-column: 1/-1;'><p>¡Roles repartidos!</p></div>";
+        }
+
+        window.comenzarJuegoOnline = async () => {
+            const codigo = document.getElementById('display-codigo').innerText.replace("SALA: ", "");
+            const snapshot = await get(child(ref(db), `salas/${codigo}`));
+            const sala = snapshot.val();
+            const players = Object.keys(sala.jugadores);
+            const cat = document.getElementById('online-category').value;
+            let usados = sala.usados || [];
+            let disponibles = data[cat].filter(a => !usados.includes(a.name));
+            if (disponibles.length === 0) { usados = []; disponibles = data[cat]; }
+
+            let artista = disponibles[Math.floor(Math.random()*disponibles.length)];
+            const impo = players[Math.floor(Math.random()*players.length)];
+            await set(ref(db, `salas/${codigo}/juego`), { impostor: impo, artistName: artista.name, img: artista.img, activa: true });
+            await set(ref(db, `salas/${codigo}/usados`), [...usados, artista.name]);
+        };
+
+        window.reiniciarPartidaOnline = async () => { const codigo = document.getElementById('display-codigo').innerText.replace("SALA: ", ""); await remove(ref(db, `salas/${codigo}/juego`)); };
+        window.cerrarSala = async () => { if(confirm("¿Eliminar sala definitivamente?")) { const codigo = document.getElementById('display-codigo').innerText.replace("SALA: ", ""); await remove(ref(db, `salas/${codigo}`)); navegar('menu-inicio'); } };
+        
+        window.salirDeSala = () => {
+            if(confirm("¿Seguro que quieres abandonar la sala?")) {
+                navegar('menu-inicio');
             }
-        }
-
-        function showSecret(index) {
-            const p = roles[index];
-            document.getElementById('currentPlayerName').innerText = p.playerName;
-            const wordEl = document.getElementById('secretWord');
-            
-            if (p.isImpostor) {
-                // PEGÁ EL LINK DE TU GIF ABAJO DONDE DICE TU_LINK_AQUÍ
-                wordEl.innerHTML = `
-                    <img src="https://cdn.betterttv.net/emote/5ccc411b152e896edf4acbd4/3x.gif" 
-                         style="width:250px; border-radius:15px; border: 3px solid #ff4444; box-shadow: 0 0 20px #ff4444;">
-                    <div class="impostor-text">ERES EL IMPOSTOR</div>
-                `;
-            } else {
-                wordEl.innerHTML = `
-                    <p style="font-size:16px; color:#aaa;">Sos:</p>
-                    <img src="${p.img}" class="artist-img" alt="Foto"><br>
-                    <span style="font-family:'Orbitron'; color:#00ffcc;">${p.artistName}</span>
-                `;
-            }
-
-            p.seen = true;
-            document.getElementById('game').classList.add('hidden');
-            document.getElementById('reveal').classList.remove('hidden');
-        }
-
-        function backToGame() {
-            document.getElementById('reveal').classList.add('hidden');
-            document.getElementById('game').classList.remove('hidden');
-            renderButtons();
-        }
-
-        function irAMenu() {
-            document.getElementById('game').classList.add('hidden');
-            document.getElementById('setup').classList.remove('hidden');
-        }
+        };
     </script>
 </body>
-
 </html>

@@ -5,53 +5,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Impostor del Under - Premium Beta</title>
     <link rel="icon" type="image/png" href="https://i.postimg.cc/k51D1wYF/4x-(1).avif">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
     <style>
-        :root { --glow-color: #ff0000; }
+        :root { --glow-color: #ff0000; --transition-speed: 0.4s; }
+        
         body { font-family: 'Segoe UI', sans-serif; text-align: center; background: #050505; color: #e0e0e0; padding: 20px; margin: 0; overflow-x: hidden; height: 100vh; display: flex; flex-direction: column; align-items: center; }
         
-        /* --- FONDO --- */
-        .bg-element { position: fixed; top: 50%; left: 50%; width: 400px; height: 400px; z-index: -1; transform: translate(-50%, -50%); opacity: 0.25; filter: drop-shadow(0 0 10px var(--glow-color)); pointer-events: none; object-fit: contain; }
+        /* --- FONDO Y EFECTOS --- */
+        .bg-element { position: fixed; top: 50%; left: 50%; width: 400px; height: 400px; z-index: -1; transform: translate(-50%, -50%); opacity: 0.25; filter: drop-shadow(0 0 10px var(--glow-color)); pointer-events: none; object-fit: contain; transition: opacity 1s ease; }
         
-        /* --- AJUSTES PREMIUM --- */
-        .settings-btn { position: fixed; top: 25px; right: 25px; background: rgba(15, 15, 15, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); color: white; padding: 10px; border-radius: 50%; cursor: pointer; z-index: 100; font-size: 22px; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); transition: 0.4s; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .settings-btn:hover { transform: rotate(90deg) scale(1.1); border-color: var(--glow-color); box-shadow: 0 0 20px var(--glow-color); }
-        #settings-panel { position: fixed; top: 85px; right: 25px; width: 220px; background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255, 0, 0, 0.3); padding: 20px; border-radius: 20px; z-index: 101; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
-        .preset-btn { font-size: 11px; padding: 12px; width: 100%; margin-bottom: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #bbb; border-radius: 12px; cursor: pointer; transition: 0.3s; font-weight: bold; text-transform: uppercase; }
-        .preset-btn:hover { background: rgba(255, 0, 0, 0.1); border-color: var(--glow-color); color: white; }
+        /* --- ANIMACIONES --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        /* --- BOTÓN COPIAR --- */
-        .copy-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 6px 12px; border-radius: 10px; font-size: 10px; font-family: 'Orbitron'; cursor: pointer; margin-left: 10px; transition: 0.3s; }
-        .copy-success { background: #28a745 !important; border-color: white !important; box-shadow: 0 0 15px rgba(40, 167, 69, 0.5); }
+        .card { 
+            animation: fadeInUp var(--transition-speed) ease-out forwards; 
+            background: rgba(20, 20, 20, 0.75); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 25px; 
+            padding: 30px; 
+            max-width: 450px; 
+            width: 90%; 
+            margin: 20px auto; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7); 
+            transition: transform 0.3s ease;
+        }
+
+        /* --- MODO STREAMER --- */
+        .streamer-blur { filter: blur(50px) grayscale(1); transition: filter 0.3s ease; cursor: pointer; }
+        .streamer-blur:hover { filter: blur(0px) grayscale(0); }
+
+        /* --- AJUSTES --- */
+        .settings-btn { position: fixed; top: 25px; right: 25px; background: rgba(15, 15, 15, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); color: white; padding: 10px; border-radius: 50%; cursor: pointer; z-index: 100; font-size: 22px; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .settings-btn:hover { transform: rotate(90deg) scale(1.1); border-color: var(--glow-color); box-shadow: 0 0 20px var(--glow-color); }
+        
+        #settings-panel { position: fixed; top: 85px; right: 25px; width: 220px; background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255, 0, 0, 0.3); padding: 20px; border-radius: 20px; z-index: 101; box-shadow: 0 10px 40px rgba(0,0,0,0.8); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; transform: translateX(0); }
+        #settings-panel.hidden { opacity: 0; transform: translateX(30px); pointer-events: none; display: block !important; }
+
+        .preset-btn { font-size: 11px; padding: 12px; width: 100%; margin-bottom: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #bbb; border-radius: 12px; cursor: pointer; transition: 0.3s; font-weight: bold; text-transform: uppercase; text-align: left; display: flex; align-items: center; gap: 10px; }
+        .preset-btn:hover { background: rgba(255, 0, 0, 0.1); border-color: var(--glow-color); color: white; transform: translateX(8px); }
+
+        .streamer-option { display: flex; align-items: center; justify-content: space-between; padding: 10px; background: rgba(255, 0, 0, 0.05); border-radius: 12px; margin-top: 10px; font-size: 11px; color: #fff; font-weight: bold; }
+
+        /* --- CHAT (SIN ANIMACIONES) --- */
+        #chat-container { background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 10px; margin-top: 20px; text-align: left; width: 100%; max-width: 400px; position: relative; backdrop-filter: blur(5px); }
+        #chat-messages { height: 150px; overflow-y: auto; font-size: 13px; display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; padding-right: 5px; scroll-behavior: smooth; }
+        .msg-line { display: block; margin-bottom: 4px; word-wrap: break-word; }
+        .msg-user { font-weight: bold; margin-right: 6px; }
+        .emote-img { height: 26px; vertical-align: middle; margin: 0 2px; }
+        
+        #chat-input { flex: 1; height: 38px; background: #000; border: 1px solid #333; border-radius: 10px 0 0 10px; color: white; padding: 0 12px; outline: none; font-size: 13px; }
+        #chat-input:focus { border-color: var(--glow-color); }
+        .btn-send { width: 45px !important; height: 40px !important; background: linear-gradient(135deg, #600 0%, #f00 100%) !important; border: none !important; border-radius: 0 10px 10px 0 !important; color: white !important; cursor: pointer; font-size: 18px !important; display: flex; align-items: center; justify-content: center; margin: 0 !important; padding: 0 !important; }
+
+        #emote-suggestions { position: absolute; bottom: 65px; left: 10px; background: rgba(10, 10, 10, 0.98); border: 1px solid var(--glow-color); border-radius: 10px; display: none; flex-direction: column; width: 180px; z-index: 1000; box-shadow: 0 0 20px rgba(255,0,0,0.4); overflow: hidden; }
+        .suggestion-item { padding: 8px 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; color: #ccc; font-size: 13px; }
+        .suggestion-item.selected { background: rgba(255, 0, 0, 0.3); color: white; border-left: 4px solid var(--glow-color); }
 
         /* --- UI GENERAL --- */
-        .card { background: rgba(20, 20, 20, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 25px; padding: 30px; max-width: 450px; width: 90%; margin: 20px auto; box-shadow: 0 15px 35px rgba(0,0,0,0.7); }
-        h1 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: #ffffff; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 15px var(--glow-color); }
-        button { background: rgba(26, 26, 26, 0.8); border: 2px solid var(--glow-color); color: white; padding: 14px 28px; margin: 10px; border-radius: 12px; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.2s; box-shadow: 0 4px 0px #800000; width: 85%; }
-        button:hover { background: var(--glow-color); transform: translateY(-2px); box-shadow: 0 0 20px rgba(255, 0, 0, 0.5), 0 6px 0px #800000; }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: #ffffff; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 15px var(--glow-color); margin-bottom: 10px; }
+        button { background: rgba(26, 26, 26, 0.8); border: 2px solid var(--glow-color); color: white; padding: 14px 28px; margin: 10px; border-radius: 12px; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 0px #800000; width: 85%; position: relative; }
+        button:hover { background: var(--glow-color); transform: translateY(-3px); box-shadow: 0 0 20px rgba(255, 0, 0, 0.5), 0 6px 0px #800000; }
+        button:active { transform: translateY(1px); box-shadow: 0 2px 0px #800000; }
         
-        /* BOTÓN ONLINE ROJO */
-        .btn-online { border-color: #8b0000; box-shadow: 0 4px 0px #4a0000; }
-        .btn-online:hover { background: #b30000; border-color: #ff0000; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5), 0 6px 0px #4a0000; }
+        .copy-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 6px 12px; border-radius: 10px; font-size: 10px; font-family: 'Orbitron'; cursor: pointer; margin-left: 10px; width: auto; box-shadow: none; }
+        .copy-success { background: #28a745 !important; }
 
         input, select { padding: 12px; margin: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); width: 85%; background: rgba(30, 30, 30, 0.8); color: white; text-align: center; }
-        .hidden { display: none; }
-        .artist-img { width: 250px; height: 250px; object-fit: cover; border-radius: 20px; border: 4px solid var(--glow-color); margin-top: 15px; }
-        .impostor-text { color: var(--glow-color); font-size: 28px; font-weight: 900; font-family: 'Orbitron'; margin-top: 15px; text-shadow: 0 0 15px rgba(255, 0, 0, 0.6); }
-        .player-tag { margin: 5px; display: inline-block; background: rgba(255, 255, 255, 0.1); padding: 5px 15px; border-radius: 20px; color: #ffffff; font-weight: bold; border: 1px solid rgba(255,255,255,0.2); }
-        .artist-name-display { font-family: 'Orbitron'; color: #ffffff; font-size: 24px; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        .hidden { display: none !important; }
+        
+        .artist-img { width: 250px; height: 250px; object-fit: cover; border-radius: 20px; border: 4px solid var(--glow-color); margin-top: 15px; animation: fadeInUp 0.5s ease; }
+        .impostor-text { color: var(--glow-color); font-size: 28px; font-weight: 900; font-family: 'Orbitron'; margin-top: 15px; text-shadow: 0 0 15px rgba(255, 0, 0, 0.6); animation: fadeInUp 0.4s ease; }
+        .player-tag { margin: 5px; display: inline-block; background: rgba(255, 255, 255, 0.1); padding: 5px 15px; border-radius: 20px; color: #ffffff; font-weight: bold; border: 1px solid rgba(255,255,255,0.2); animation: fadeInUp 0.3s ease; }
+        .artist-name-display { font-family: 'Orbitron'; color: #ffffff; font-size: 24px; text-shadow: 0 0 10px rgba(255,255,255,0.5); display: block; margin-top: 10px; }
     </style>
 </head>
 <body>
 
     <div class="settings-btn" onclick="toggleSettings()">⚙️</div>
     <div id="settings-panel" class="hidden">
-        <h3 style="font-family:'Orbitron'; font-size:0.7rem; color:#fff;">AJUSTES VISUALES</h3>
-        <div class="preset-grid">
-            <button class="preset-btn" onclick="changeBg('https://i.gifer.com/origin/9f/9f6c9a72c4143f9e7cbc6e4b6253a4e7.gif')">🌿 MARIHUANA</button>
-            <button class="preset-btn" onclick="changeBg('https://i.gifer.com/origin/c3/c3eac7a9248cfb7b27e6803199dc906f.gif')">🥤 DOUBLE CUP</button>
-            <button class="preset-btn" onclick="changeBg('https://i.postimg.cc/qM53PzCM/3dgifmaker86249.gif')">⭐ MATECAPP</button>
-            <button class="preset-btn" onclick="changeBg('https://i.postimg.cc/ZqT4jLYs/3dgifmaker97841.gif')">🏆 GOLDGE</button> 
+        <button class="preset-btn" onclick="changeBg('https://i.gifer.com/origin/9f/9f6c9a72c4143f9e7cbc6e4b6253a4e7.gif')">🌿 MARIHUANA</button>
+        <button class="preset-btn" onclick="changeBg('https://i.gifer.com/origin/c3/c3eac7a9248cfb7b27e6803199dc906f.gif')">🥤 DOUBLE CUP</button>
+        <button class="preset-btn" onclick="changeBg('https://i.postimg.cc/qM53PzCM/3dgifmaker86249.gif')">⭐ MATECAPP</button>
+        <button class="preset-btn" onclick="changeBg('https://i.postimg.cc/ZqT4jLYs/3dgifmaker97841.gif')">🏆 GOLDGE</button> 
+        <div class="streamer-option">
+            <span>MODO STREAMER</span>
+            <input type="checkbox" id="streamerMode" style="width:auto; margin:0;" onclick="playClick()">
         </div>
     </div>
 
@@ -61,7 +103,7 @@
         <h1>IMPOSTOR DEL UNDER</h1>
         <p style="color:#888;">by FORTINEROCAVS</p>
         <button onclick="playClick(); navegar('local-setup')">MODO LOCAL</button>
-        <button class="btn-online" onclick="playClick(); navegar('online-setup')">MODO ONLINE</button>
+        <button style="border-color:#8b0000;" onclick="playClick(); navegar('online-setup')">MODO ONLINE</button>
     </div>
 
     <div id="local-setup" class="card hidden">
@@ -102,7 +144,17 @@
             <button class="copy-btn" onclick="copiarCodigo()">📋 COPIAR</button>
         </div>
         <div id="lista-jugadores" style="margin-bottom: 20px;"></div>
-        <div id="opciones-host" class="hidden">
+        
+        <div id="chat-container">
+            <div id="emote-suggestions"></div>
+            <div id="chat-messages"></div>
+            <div style="display: flex; align-items: center;">
+                <input type="text" id="chat-input" placeholder="Escribe aquí y Chattea..." autocomplete="off">
+                <button class="btn-send" onclick="enviarMensaje()">➜</button>
+            </div>
+        </div>
+
+        <div id="opciones-host" class="hidden" style="margin-top: 20px;">
             <select id="online-category">
                 <option value="nacional">UNDER ARGENTINO 🇦🇷</option>
                 <option value="internacional">UNDER INTERNACIONAL 🌎</option>
@@ -112,38 +164,111 @@
             <button style="background:rgba(255,0,0,0.2); border-color:#ff0000; font-size:10px; width:auto; margin-top: 10px;" onclick="playClick(); cerrarSala()">ELIMINAR SALA (HOST)</button>
         </div>
         <p id="msg-espera">Esperando al host...</p>
-        <button onclick="playClick(); salirDeSala()" style="background:transparent; border:1px solid rgba(255,0,0,0.4); color:rgba(255,255,255,0.5); font-size:10px; width:auto; margin-top:20px; box-shadow:none;">
-            ← ABANDONAR SALA
-        </button>
+        <button onclick="playClick(); salirDeSala()" style="background:transparent; border:1px solid rgba(255,0,0,0.4); color:rgba(255,255,255,0.5); font-size:10px; width:auto; margin-top:20px; box-shadow:none;">← ABANDONAR SALA</button>
     </div>
 
     <div id="reveal" class="card hidden">
         <h2 id="currentPlayerDisplay" style="font-family: 'Orbitron'; color: #ff0000;"></h2>
         <div id="secretWord"></div>
+        <div id="host-next-container"></div>
         <br>
         <button id="btn-listo-local" class="hidden" onclick="playClick(); volverAlGridLocal()">YA LO VI (OCULTAR)</button>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, set, get, child, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, set, get, child, onValue, push, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCwvdaZOLQYFPrAj00z9C00fi9L6h3RqQ",
-            authDomain: "impostor-under.firebaseapp.com",
-            databaseURL: "https://impostor-under-default-rtdb.firebaseio.com",
-            projectId: "impostor-under",
-            storageBucket: "impostor-under.firebasestorage.app",
-            messagingSenderId: "817403614820",
-            appId: "1:817403614820:web:27186b698a818fbd56b171"
-        };
+        const firebaseConfig = { apiKey: "AIzaSyCwvdaZOLQYFPrAj00z9C00fi9L6h3RqQ", authDomain: "impostor-under.firebaseapp.com", databaseURL: "https://impostor-under-default-rtdb.firebaseio.com", projectId: "impostor-under", storageBucket: "impostor-under.firebasestorage.app", messagingSenderId: "817403614820", appId: "1:817403614820:web:27186b698a818fbd56b171" };
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
+        const data = {
+            nacional: [
+                { name: "enzocerobulto", img: "https://i.postimg.cc/Gt8gDdX3/Captura-de-pantalla-2025-12-24-222000.png" }, { name: "cero*", img: "https://images.genius.com/89341d9a7fd370ea3d9c4fdd9da534c1.955x955x1.jpg" }, { name: "LoLo", img: "https://images.genius.com/3326aa6a0dafae6a4d5b537c58024724.1000x1000x1.jpg" }, { name: "Frozouda", img: "https://i.postimg.cc/L4Lbm6g3/FRO-2-DISPONIBLE-EN-TODO-EL-MUNDO-lasreconciliaciones-EXISTEN.jpg" }, { name: "Zell", img: "https://images.genius.com/b882b7173c3dd73eb59c69a5d6bb3195.767x767x1.jpg" }, { name: "Bic", img: "https://i.scdn.co/image/ab6761610000e5ebb54a9d616d9623597caf569d" }, { name: "Choosey", img: "https://i.postimg.cc/HWzbwfqM/nou-kap.webp" }, { name: "Stiffy", img: "https://i.scdn.co/image/ab67616100005174ca976dc555059fa8321e672f" }, { name: "AgusFortnite2008", img: "https://images.genius.com/14d07d12fa5c59b66c18ccd78d4dc4ed.1000x1000x1.png" }, { name: "Joshu Joshu", img: "https://akamai.sscdn.co/uploadfile/letras/fotos/e/4/8/9/e489a3d08fad665e2ec3cf8e49e4a94c.jpg" }, { name: "ISMALDZ", img: "https://i.postimg.cc/wTJyWZPF/nuevo-video-en-breveeeeee-2037.jpg" }, { name: "huntr", img: "https://i.postimg.cc/rs96s8sQ/Captura-de-pantalla-2025-12-24-223945.png" }, { name: "Little Boogie", img: "https://i.postimg.cc/0QdXdVsV/Seran-angeles-o-demonios-todas-estas-voces.jpg" }, { name: "Magnesio", img: "https://i.postimg.cc/YCGXyr7z/Captura-de-pantalla-2025-12-24-224313.png" }, { name: "Pabloxo", img: "https://images.genius.com/cd02d950f7ec4221a876531847d9cd7d.1000x1000x1.jpg" }, { name: "TooYugan", img: "https://i.scdn.co/image/ab6761610000e5eb74a776c6799a7e3a541aadff" }, { name: "Saramalacara", img: "https://i1.sndcdn.com/avatars-c8xXcz8MF86Xly9U-LecIyw-t1080x1080.jpg" }, { name: "SixUp", img: "https://i.scdn.co/image/ab6761610000e5ebbf877a11d26f93d179cc6a18" }, { name: "Turrobaby", img: "https://streetartlatam.s3.us-east-1.amazonaws.com/production/Turrobaby_pilar_de_la_nueva_escena_del_genero_urbano_argentino_192c29249f.jpg" }, { name: "Shako", img: "https://i.postimg.cc/L6rk5zdg/anhelostudios-anhelostudios-ge.jpg" }, { name: "Clúster", img: "https://images.genius.com/7edaae77b7f3aa31b932954ba50e6fce.542x542x1.png" }, { name: "Polus", img: "https://i.postimg.cc/G2HJ9zpV/get.jpg" }, { name: "Vahel", img: "https://i.postimg.cc/XN5dhrBB/533418608-17881435881364809-3823578737294317030-n.jpg" }, { name: "Blagh", img: "https://cdn-images.dzcdn.net/images/cover/750d3fd0259fbf8846a2d862040d8477/1900x1900-000000-80-0-0.jpg" }, { name: "Jugo", img: "https://i.scdn.co/image/ab6761610000e5eb1d2d1249588f2711a9063a39" }, { name: "143leti", img: "https://images.genius.com/0ded9119574cba694ed1755c030e482b.1000x1000x1.png" }, { name: "salasflaco", img: "https://i.postimg.cc/Kzgzjp6b/channels4-profile.jpg" }, { name: "Hellolola", img: "https://i.postimg.cc/vB9Ybgnn/channels4-profile-(1).jpg" }, { name: "panchitolefleur", img: "https://i1.sndcdn.com/avatars-HcU1cc6L0enEflCQ-53xxDw-t1080x1080.jpg" }, { name: "Nykoo0", img: "https://i.postimg.cc/VLLstTwf/574186866-18096188749801792-4009584160816206924-n.jpg" }, { name: "Hepa", img: "https://i.postimg.cc/sXrsgHmq/541597304-18477601273076861-1456195632179985994-n.jpg" }, { name: "2UU!", img: "https://i.postimg.cc/qv6TXH5p/Se-va-un-2025-lleno-de-emociones-lleno-de-cosas-increibles-conoci-muchas-provincias-de-argenti.jpg" }
+            ],
+            internacional: [
+                { name: "Cybernene", img: "https://i.scdn.co/image/ab6761610000e5eb89de19647487810a7a70b873" }, { name: "Bbtrickz", img: "https://highxtar.com/wp-content/uploads/2023/11/highxtar-bb-trickz-1-1440x1080.jpg" }, { name: "Playboi Carti", img: "https://cdn-images.dzcdn.net/images/artist/b90097972a60d9d8598a79a786be1a3a/1900x1900-000000-81-0-0.jpg" }, { name: "Che", img: "https://vmagazine.com/wp-content/uploads/2025/07/IMG_5552.jpeg" }, { name: "Chief Keef", img: "https://d2umolmz9zcmr8.cloudfront.net/unsafe/2560x0/filters:no_upscale():quality(60)/contentmedia%2Fff98540f-7643-42e8-b16e-7a3a8678fa03.jpg" }, { name: "Kanye West", img: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Kanye_West_at_the_2009_Tribeca_Film_Festival_%28crop_2%29.jpg" }, { name: "2hollis", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/2Hollis.jpg/250px-2Hollis.jpg" }, { name: "Nettspend", img: "https://i.scdn.co/image/ab676161000051746bc255a221b2d2db4c1de21f" }, { name: "Rojuu", img: "https://i.scdn.co/image/ab6761610000e5eb0d5f7931593af45b92981acc" }, { name: "Osamason", img: "https://osamasonmerch.com/wp-content/uploads/2024/03/Osamason-Merch-2.jpg" }, { name: "PACHUDANI🏄‍♂️", img: "https://i.postimg.cc/gkSFQ5HF/descarga-(1).jpg" }, { name: "Wiz Khalifa", img: "https://i.scdn.co/image/ab6761610000e5ebc66b0a8c3268f0b6556f64a8" }, { name: "Sa!koro", img: "https://images.genius.com/c2e1b9704d362f2826af42e98a878d96.500x500x1.png" }, { name: "Underaiki", img: "https://244a58fa4a.cbaul-cdnwnd.com/028a8eefb8aa330e25c402b6f92d8c72/200000138-816df816e0/artworks-ku0avQmZAtBlTuiA-ncwzyA-t500x500.jpeg?ph=244a58fa4a" }, { name: "Laurasad", img: "https://i.postimg.cc/htdkQbX7/q-loko-q-ta-mi-vasitoooooooooo.jpg" }, { name: "Francis Jeremy", img: "https://i.scdn.co/image/ab67616d00001e02765fe3d4cdb634f95b9aab19" }, { name: "HWII", img: "https://i.postimg.cc/4xrQnq0q/image.jpg" }, { name: "xaviersobased", img: "https://i.postimg.cc/pLC9wP1L/1900x1900-000000-80-0-0.jpg" }
+            ]
+        };
+
+        const EMOTES_LIST = {
+            "TRU": "https://cdn.7tv.app/emote/01GWBD2YR00002CCPRV6KPX758/4x.avif", "KEK": "https://cdn.7tv.app/emote/01F6NP85QG0003C6R1CKK91XW2/4x.avif", "ImNotCrying": "https://cdn.7tv.app/emote/01HQ3G9VXG0003F4PCSCF2J901/4x.avif", "aja": "https://cdn.7tv.app/emote/01G6YE862G0009H0PZMRY8306H/4x.avif", "ajam": "https://cdn.7tv.app/emote/01JAZHTFKEJRECG62C2PDQSK2E/4x.avif", 
+            "thatsCrazy": "https://cdn.7tv.app/emote/01JTVCAPVDNDBCT44MCMTYH5T0/4x.avif", "LOL": "https://cdn.7tv.app/emote/01FZ975PV8000B4AWRZNMVNEXN/4x.avif", "LOLcoop": "https://cdn.7tv.app/emote/01G20D1C4G000DX65PH389C7J3/4x.avif", "Fisura": "https://cdn.7tv.app/emote/01HHDRS840000D71P5DYEXMWX2/4x.avif", "Ndans": "https://cdn.7tv.app/emote/01K8PC40FF6RTDSAG8CJKXSRTG/4x.avif", 
+            "War": "https://cdn.7tv.app/emote/01KB63R36T3NWEMPQP9ZNABE21/4x.avif", "DinkDonki": "https://cdn.7tv.app/emote/01GA9PRNJR000E7TK2XZD0KYB6/4x.avif", "HAPPEEEE": "https://cdn.7tv.app/emote/01FE17HWYG00002456ZSHJ4B8Y/4x.avif", "wave": "https://cdn.7tv.app/emote/01HP9MYD2G0003S4PACH9JQK2C/4x.avif", "90o": "https://cdn.7tv.app/emote/01HNF5JF3R00081R0PP0E39SCC/4x.avif", 
+            "MJMJ": "https://cdn.7tv.app/emote/01F9N048XR00005C1KM5Y78039/4x.avif", "KEKW": "https://cdn.7tv.app/emote/01F61B1440000991F7SWQNMVX7/4x.avif", "dosehiii": "https://cdn.7tv.app/emote/01HR03WKFR0007A6HAQTCEP2B3/4x.avif", "dosepot": "https://cdn.7tv.app/emote/01GQ5WZJTR0003T8SJR61NN7ZC/4x.avif", "RatgeHD": "https://cdn.7tv.app/emote/01GQMW7ZFG0004A5FQAX7Q1DEB/4x.avif", 
+            "D:": "https://cdn.7tv.app/emote/01GM78BAGR0001WBT5AMQY9YG3/4x.avif", "EDGY": "https://cdn.7tv.app/emote/01GD8YX1JG000EDQQXN4J00CTJ/4x.avif", "BANGER": "https://cdn.7tv.app/emote/01HTBEG0DR0006FBV1QSYDSDT6/4x.avif", "dans": "https://cdn.7tv.app/emote/01JDZNSM7V3M3B1XYTJAJJENH1/4x.avif", "NAHH": "https://cdn.7tv.app/emote/01GFA0HR0R0009751C3WBKGNB2/4x.avif", "SHE": "https://cdn.7tv.app/emote/01HA0XA75G0004KB5679WA5S3M/4x.avif", 
+            "Hmm": "https://cdn.7tv.app/emote/01F6MA6Y100002B6P5MWZ5D916/4x.avif", "SAJ": "https://cdn.7tv.app/emote/01FTMWFFKR0000GK7T5R2X4NKQ/4x.avif", "MAJ": "https://cdn.7tv.app/emote/01FJJMVEFR000FZHS49NWQSFXE/4x.avif", "muh": "https://cdn.7tv.app/emote/01J1QQ780R00068734GKCYFFMV/4x.avif", "PauseChamp": "https://cdn.7tv.app/emote/01F6VMK5V00002K1FKHYT6PAD3/4x.avif", "RUN": "https://cdn.7tv.app/emote/01GEB9654800035T18VJ6D2WZG/4x.avif", 
+            "ALO": "https://cdn.7tv.app/emote/01FE6PFVQ0000FNV2HD55W9QAW/4x.avif", "WTF": "https://cdn.7tv.app/emote/01F6XH78V80000C5PXC5BE6JW7/4x.avif", "Rap": "https://cdn.7tv.app/emote/01GT5XCEFG0004J62EZBADJAM9/4x.avif", "BLUBBERS": "https://cdn.7tv.app/emote/01F136TESR0009V7MP006J8KY9/4x.avif", "classic": "https://cdn.7tv.app/emote/01GBPSCGR00007Q17796BDN5AJ/4x.avif", 
+            "FINALLY": "https://cdn.7tv.app/emote/01GYYJ0928000DPYRQPB67BA13/4x.avif", "55o": "https://cdn.7tv.app/emote/01GXGP19V800087D9ACF4KB4F9/4x.avif", "MLADY": "https://cdn.7tv.app/emote/01F6PYVPP80005CV1Y3Z4X4V4K/4x.avif", "sisi": "https://cdn.7tv.app/emote/01HJQQXH8G000DQX3MV0V8TXAV/4x.avif", "nono": "https://cdn.7tv.app/emote/01HJQNQ0DR000BYEJVE2JB38YF/4x.avif", "11m": "https://cdn.7tv.app/emote/01K55F84S27K98Z8F9Q756VFEP/4x.avif"
+        };
+
+        const chatInput = document.getElementById('chat-input');
+        const suggestionsBox = document.getElementById('emote-suggestions');
+        let selectedIndex = 0;
+        let currentMatches = [];
+
+        chatInput.addEventListener('input', () => {
+            const val = chatInput.value;
+            const lastColon = val.lastIndexOf(':');
+            if (lastColon !== -1 && !val.substring(lastColon).includes(' ')) {
+                const query = val.substring(lastColon + 1).toLowerCase();
+                currentMatches = Object.keys(EMOTES_LIST).filter(n => n.toLowerCase().startsWith(query));
+                if (currentMatches.length > 0) { selectedIndex = 0; renderSuggestions(lastColon); }
+                else { hideSuggestions(); }
+            } else { hideSuggestions(); }
+        });
+
+        chatInput.addEventListener('keydown', function(e) {
+            if (suggestionsBox.style.display === 'flex') {
+                if (e.key === 'Tab' || e.key === 'ArrowDown') { e.preventDefault(); selectedIndex = (selectedIndex + 1) % currentMatches.length; renderSuggestions(chatInput.value.lastIndexOf(':')); }
+                else if (e.key === 'ArrowUp') { e.preventDefault(); selectedIndex = (selectedIndex - 1 + currentMatches.length) % currentMatches.length; renderSuggestions(chatInput.value.lastIndexOf(':')); }
+                else if (e.key === 'Enter') { e.preventDefault(); if (currentMatches[selectedIndex]) insertEmote(currentMatches[selectedIndex], chatInput.value.lastIndexOf(':')); }
+                return;
+            }
+            if (e.key === 'Tab') {
+                const words = this.value.split(" ");
+                const lastWord = words[words.length - 1].toLowerCase();
+                if (lastWord.length > 0) {
+                    const match = Object.keys(EMOTES_LIST).find(n => n.toLowerCase().startsWith(lastWord));
+                    if (match) { e.preventDefault(); words[words.length - 1] = match; this.value = words.join(" ") + " "; }
+                }
+            } else if (e.key === 'Enter') { e.preventDefault(); enviarMensaje(); }
+        });
+
+        function renderSuggestions(colonIndex) {
+            suggestionsBox.innerHTML = currentMatches.map((m, i) => `<div class="suggestion-item ${i === selectedIndex ? 'selected' : ''}" onclick="insertEmote('${m}', ${colonIndex})"><img src="${EMOTES_LIST[m]}" width="22"> <span>${m}</span></div>`).join('');
+            suggestionsBox.style.display = 'flex';
+        }
+        function hideSuggestions() { suggestionsBox.style.display = 'none'; }
+        window.insertEmote = (name, colonIndex) => { const val = chatInput.value; chatInput.value = val.substring(0, colonIndex) + name + " "; hideSuggestions(); chatInput.focus(); };
+
+        function getUsernameColor(username) {
+            let hash = 0; for (let i = 0; i < username.length; i++) hash = username.charCodeAt(i) + ((hash << 5) - hash);
+            const c = (hash & 0x00FFFFFF).toString(16).toUpperCase();
+            return "#" + "00000".substring(0, 6 - c.length) + c;
+        }
+
+        function parseEmotes(text) {
+            return text.split(" ").map(word => {
+                const match = Object.keys(EMOTES_LIST).find(k => k.toLowerCase() === word.toLowerCase());
+                if (match) return `<img src="${EMOTES_LIST[match]}" class="emote-img" title="${match}">`;
+                return word;
+            }).join(" ");
+        }
+
         window.navegar = (id) => {
-            const pantallas = ['menu-inicio', 'local-setup', 'local-game', 'online-setup', 'lobby', 'reveal'];
-            pantallas.forEach(p => document.getElementById(p).classList.add('hidden'));
-            document.getElementById(id).classList.remove('hidden');
+            const current = document.querySelector('.card:not(.hidden)');
+            if(current) {
+                current.style.opacity = '0'; current.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    document.querySelectorAll('.card').forEach(c => { c.classList.add('hidden'); c.style.opacity = ''; c.style.transform = ''; });
+                    document.getElementById(id).classList.remove('hidden');
+                }, 200);
+            } else {
+                document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+                document.getElementById(id).classList.remove('hidden');
+            }
         };
 
         window.toggleSettings = () => { document.getElementById('settings-panel').classList.toggle('hidden'); };
@@ -155,70 +280,13 @@
             const texto = document.getElementById('display-codigo').innerText.replace("SALA: ", "");
             navigator.clipboard.writeText(texto).then(() => {
                 const btn = document.querySelector('.copy-btn');
-                btn.innerText = "✅ COPIADO";
-                btn.classList.add('copy-success');
+                btn.innerText = "✅ COPIADO"; btn.classList.add('copy-success');
                 setTimeout(() => { btn.innerText = "📋 COPIAR"; btn.classList.remove('copy-success'); }, 2000);
             });
             playClick();
         };
 
-        const data = {
-            nacional: [
-                { name: "enzocerobulto", img: "https://i.postimg.cc/Gt8gDdX3/Captura-de-pantalla-2025-12-24-222000.png" },
-                { name: "cero*", img: "https://images.genius.com/89341d9a7fd370ea3d9c4fdd9da534c1.955x955x1.jpg" },
-                { name: "LoLo", img: "https://images.genius.com/3326aa6a0dafae6a4d5b537c58024724.1000x1000x1.jpg" },
-                { name: "Frozouda", img: "https://i.postimg.cc/L4Lbm6g3/FRO-2-DISPONIBLE-EN-TODO-EL-MUNDO-lasreconciliaciones-EXISTEN.jpg" },
-                { name: "Zell", img: "https://images.genius.com/b882b7173c3dd73eb59c69a5d6bb3195.767x767x1.jpg" },
-                { name: "Bic", img: "https://i.scdn.co/image/ab6761610000e5ebb54a9d616d9623597caf569d" },
-                { name: "Choosey", img: "https://i.postimg.cc/HWzbwfqM/nou-kap.webp" },
-                { name: "Stiffy", img: "https://i.scdn.co/image/ab67616100005174ca976dc555059fa8321e672f" },
-                { name: "AgusFortnite2008", img: "https://images.genius.com/14d07d12fa5c59b66c18ccd78d4dc4ed.1000x1000x1.png" },
-                { name: "Joshu Joshu", img: "https://akamai.sscdn.co/uploadfile/letras/fotos/e/4/8/9/e489a3d08fad665e2ec3cf8e49e4a94c.jpg" },
-                { name: "ISMALDZ", img: "https://i.postimg.cc/wTJyWZPF/nuevo-video-en-breveeeeee-2037.jpg" },
-                { name: "huntr", img: "https://i.postimg.cc/rs96s8sQ/Captura-de-pantalla-2025-12-24-223945.png" },
-                { name: "Little Boogie", img: "https://i.postimg.cc/0QdXdVsV/Seran-angeles-o-demonios-todas-estas-voces.jpg" },
-                { name: "Magnesio", img: "https://i.postimg.cc/YCGXyr7z/Captura-de-pantalla-2025-12-24-224313.png" },
-                { name: "Pabloxo", img: "https://images.genius.com/cd02d950f7ec4221a876531847d9cd7d.1000x1000x1.jpg" },
-                { name: "TooYugan", img: "https://i.scdn.co/image/ab6761610000e5eb74a776c6799a7e3a541aadff" },
-                { name: "Saramalacara", img: "https://i1.sndcdn.com/avatars-c8xXcz8MF86Xly9U-LecIyw-t1080x1080.jpg" },
-                { name: "SixUp", img: "https://i.scdn.co/image/ab6761610000e5ebbf877a11d26f93d179cc6a18" },
-                { name: "Turrobaby", img: "https://streetartlatam.s3.us-east-1.amazonaws.com/production/Turrobaby_pilar_de_la_nueva_escena_del_genero_urbano_argentino_192c29249f.jpg" },
-                { name: "Shako", img: "https://i.postimg.cc/L6rk5zdg/anhelostudios-anhelostudios-ge.jpg" },
-                { name: "Clúster", img: "https://images.genius.com/7edaae77b7f3aa31b932954ba50e6fce.542x542x1.png" },
-                { name: "Polus", img: "https://i.postimg.cc/G2HJ9zpV/get.jpg" },
-                { name: "Vahel", img: "https://i.postimg.cc/XN5dhrBB/533418608-17881435881364809-3823578737294317030-n.jpg" },
-                { name: "Blagh", img: "https://cdn-images.dzcdn.net/images/cover/750d3fd0259fbf8846a2d862040d8477/1900x1900-000000-80-0-0.jpg" },
-                { name: "Jugo", img: "https://i.scdn.co/image/ab6761610000e5eb1d2d1249588f2711a9063a39" },
-                { name: "143leti", img: "https://images.genius.com/0ded9119574cba694ed1755c030e482b.1000x1000x1.png" },
-                { name: "salasflaco", img: "https://i.postimg.cc/Kzgzjp6b/channels4-profile.jpg" },
-                { name: "Hellolola", img: "https://i.postimg.cc/vB9Ybgnn/channels4-profile-(1).jpg" },
-                { name: "panchitolefleur", img: "https://i1.sndcdn.com/avatars-HcU1cc6L0enEflCQ-53xxDw-t1080x1080.jpg" },
-                { name: "Nykoo0", img: "https://i.postimg.cc/VLLstTwf/574186866-18096188749801792-4009584160816206924-n.jpg" },
-                { name: "Hepa", img: "https://i.postimg.cc/sXrsgHmq/541597304-18477601273076861-1456195632179985994-n.jpg" },
-                { name: "2UU!", img: "https://i.postimg.cc/qv6TXH5p/Se-va-un-2025-lleno-de-emociones-lleno-de-cosas-increibles-conoci-muchas-provincias-de-argenti.jpg" }
-            ],
-            internacional: [
-                { name: "Cybernene", img: "https://i.scdn.co/image/ab6761610000e5eb89de19647487810a7a70b873" },
-                { name: "Bbtrickz", img: "https://highxtar.com/wp-content/uploads/2023/11/highxtar-bb-trickz-1-1440x1080.jpg" },
-                { name: "Playboi Carti", img: "https://cdn-images.dzcdn.net/images/artist/b90097972a60d9d8598a79a786be1a3a/1900x1900-000000-81-0-0.jpg" },
-                { name: "Che", img: "https://vmagazine.com/wp-content/uploads/2025/07/IMG_5552.jpeg" },
-                { name: "Chief Keef", img: "https://d2umolmz9zcmr8.cloudfront.net/unsafe/2560x0/filters:no_upscale():quality(60)/contentmedia%2Fff98540f-7643-42e8-b16e-7a3a8678fa03.jpg" },
-                { name: "Kanye West", img: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Kanye_West_at_the_2009_Tribeca_Film_Festival_%28crop_2%29.jpg" },
-                { name: "2hollis", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/2Hollis.jpg/250px-2Hollis.jpg" },
-                { name: "Nettspend", img: "https://i.scdn.co/image/ab676161000051746bc255a221b2d2db4c1de21f" },
-                { name: "Rojuu", img: "https://i.scdn.co/image/ab6761610000e5eb0d5f7931593af45b92981acc" },
-                { name: "Osamason", img: "https://osamasonmerch.com/wp-content/uploads/2024/03/Osamason-Merch-2.jpg" },
-                { name: "PACHUDANI🏄‍♂️", img: "https://i.postimg.cc/gkSFQ5HF/descarga-(1).jpg" },
-                { name: "Wiz Khalifa", img: "https://i.scdn.co/image/ab6761610000e5ebc66b0a8c3268f0b6556f64a8" },
-                { name: "Sa!koro", img: "https://images.genius.com/c2e1b9704d362f2826af42e98a878d96.500x500x1.png" },
-                { name: "Underaiki", img: "https://244a58fa4a.cbaul-cdnwnd.com/028a8eefb8aa330e25c402b6f92d8c72/200000138-816df816e0/artworks-ku0avQmZAtBlTuiA-ncwzyA-t500x500.jpeg?ph=244a58fa4a" },
-                { name: "Laurasad", img: "https://i.postimg.cc/htdkQbX7/q-loko-q-ta-mi-vasitoooooooooo.jpg" },
-                { name: "Francis Jeremy", img: "https://i.scdn.co/image/ab67616d00001e02765fe3d4cdb634f95b9aab19" },
-                { name: "HWII", img: "https://i.postimg.cc/4xrQnq0q/image.jpg" },
-                { name: "xaviersobased", img: "https://i.postimg.cc/pLC9wP1L/1900x1900-000000-80-0-0.jpg" }
-            ]
-        };
-
+        // --- LÓGICA DE JUEGO ---
         let rolesLocal = [];
         let usadosLocal = { nacional: [], internacional: [] };
 
@@ -230,7 +298,6 @@
 
             let disponibles = data[cat].filter(a => !usadosLocal[cat].includes(a.name));
             if (disponibles.length === 0) { usadosLocal[cat] = []; disponibles = data[cat]; }
-
             const art = disponibles[Math.floor(Math.random()*disponibles.length)];
             usadosLocal[cat].push(art.name);
 
@@ -239,47 +306,52 @@
                 let i = Math.floor(Math.random()*rolesLocal.length); 
                 if(!rolesLocal[i].isImpostor) { rolesLocal[i].isImpostor = true; count++; } 
             }
-            renderButtonsLocal();
-            navegar('local-game');
+            renderButtonsLocal(); navegar('local-game');
         };
 
         function renderButtonsLocal() {
             const container = document.getElementById('playerButtonsLocal');
-            container.innerHTML = rolesLocal.map((p, i) => p.seen ? '' : `<button onclick="playClick(); showSecretLocal(${i})">${p.playerName}</button>`).join("");
-            if (rolesLocal.every(p => p.seen)) container.innerHTML = "<p style='color:red; font-family:Orbitron;'>¡TODOS LISTOS!</p>";
+            const pending = rolesLocal.map((p, i) => (!p.seen) ? `<button onclick="playClick(); showSecretLocal(${i})">${p.playerName}</button>` : '').join("");
+            container.innerHTML = pending === "" ? "<p style='color:red; font-family:Orbitron;'>¡TODOS LISTOS!</p>" : pending;
         }
 
         window.showSecretLocal = (i) => {
-            const p = rolesLocal[i]; p.seen = true;
+            rolesLocal[i].seen = true; const p = rolesLocal[i];
+            const isStreamer = document.getElementById('streamerMode').checked;
             document.getElementById('currentPlayerDisplay').innerText = p.playerName;
             const wordEl = document.getElementById('secretWord');
+            const blurClass = isStreamer ? 'streamer-blur' : '';
             if (p.isImpostor) {
-                wordEl.innerHTML = `<img src="https://cdn.betterttv.net/emote/5ccc411b152e896edf4acbd4/3x.gif" style="width:250px; border-radius:15px; border: 3px solid #ff0000;"><div class="impostor-text">ERES EL IMPOSTOR</div>`;
+                wordEl.innerHTML = `<div class="${blurClass}"><img src="https://cdn.betterttv.net/emote/5ccc411b152e896edf4acbd4/3x.gif" style="width:250px; border-radius:15px; border: 3px solid #ff0000;"><div class="impostor-text">ERES EL IMPOSTOR</div></div>`;
             } else {
-                wordEl.innerHTML = `<p style="color:#aaa;">Tu Artista:</p><img src="${p.img}" class="artist-img"><br><span class="artist-name-display">${p.artistName}</span>`;
+                wordEl.innerHTML = `<div class="${blurClass}"><p style="color:#aaa;">Tu Artista:</p><img src="${p.img}" class="artist-img"><br><span class="artist-name-display">${p.artistName}</span></div>`;
             }
             navegar('reveal');
             document.getElementById('btn-listo-local').classList.remove('hidden');
+            document.getElementById('host-next-container').innerHTML = ""; 
         }
 
-        window.volverAlGridLocal = () => { navegar('local-game'); renderButtonsLocal(); };
+        window.volverAlGridLocal = () => { navegar('local-game'); setTimeout(renderButtonsLocal, 300); };
 
+        // --- ONLINE ---
         window.hostear = async () => {
-            const nombre = document.getElementById('playerNameOnline').value;
-            if(!nombre) return alert("Escribe tu apodo");
+            const nombre = document.getElementById('playerNameOnline').value.trim(); if(!nombre) return alert("Escribe tu apodo");
             const codigo = Math.random().toString(36).substring(2, 6).toUpperCase();
-            await set(ref(db, 'salas/' + codigo), { jugadores: { [nombre]: true } });
+            await set(ref(db, 'salas/' + codigo), { jugadores: { [nombre]: true }, creador: nombre });
             iniciarLobby(codigo, nombre, true);
         };
 
         window.unirse = async () => {
-            const nombre = document.getElementById('playerNameOnline').value;
-            const code = document.getElementById('roomCode').value.toUpperCase();
+            const nombre = document.getElementById('playerNameOnline').value.trim();
+            const code = document.getElementById('roomCode').value.toUpperCase().trim();
             if(!nombre || !code) return alert("Faltan datos");
+            
             const snap = await get(child(ref(db), `salas/${code}`));
             if (snap.exists()) {
                 const sala = snap.val();
-                if (Object.keys(sala.jugadores || {}).length >= 10) return alert("Sala llena");
+                if (sala.jugadores && sala.jugadores[nombre]) {
+                    return alert("¡Ese nombre ya está en uso en esta sala! Elige otro apodo.");
+                }
                 await set(ref(db, `salas/${code}/jugadores/${nombre}`), true);
                 iniciarLobby(code, nombre, false);
             } else alert("No existe la sala");
@@ -293,27 +365,42 @@
             onValue(ref(db, `salas/${codigo}`), (snap) => {
                 if(!snap.exists()) return navegar('menu-inicio');
                 const sala = snap.val();
-                if(sala.jugadores) {
-                    document.getElementById('lista-jugadores').innerHTML = Object.keys(sala.jugadores).map(n => `<span class="player-tag">👤 ${n}</span>`).join("");
-                }
+                if(sala.jugadores) document.getElementById('lista-jugadores').innerHTML = Object.keys(sala.jugadores).map(n => `<span class="player-tag">👤 ${n}</span>`).join("");
+
                 if (sala.juego && sala.juego.activa) {
-                    const j = sala.juego;
-                    navegar('reveal');
-                    document.getElementById('currentPlayerDisplay').innerText = miNombre;
-                    const wordEl = document.getElementById('secretWord');
-                    if (j.impostor === miNombre) {
-                        wordEl.innerHTML = `<img src="https://cdn.betterttv.net/emote/5ccc411b152e896edf4acbd4/3x.gif" style="width:250px; border-radius:15px; border: 3px solid #ff0000;"><div class="impostor-text">SOS EL IMPOSTOR</div>`;
-                    } else {
-                        wordEl.innerHTML = `<p style="color:#aaa;">Tu artista:</p><img src="${j.img}" class="artist-img"><br><span class="artist-name-display">${j.artistName}</span>`;
+                    if(document.getElementById('reveal').classList.contains('hidden')) {
+                        const isStreamer = document.getElementById('streamerMode').checked;
+                        const blurClass = isStreamer ? 'streamer-blur' : '';
+                        navegar('reveal');
+                        document.getElementById('btn-listo-local').classList.add('hidden');
+                        document.getElementById('currentPlayerDisplay').innerText = miNombre;
+                        const wordEl = document.getElementById('secretWord');
+                        if (sala.juego.impostor === miNombre) {
+                            wordEl.innerHTML = `<div class="${blurClass}"><img src="https://cdn.betterttv.net/emote/5ccc411b152e896edf4acbd4/3x.gif" style="width:250px; border-radius:15px; border: 3px solid #ff0000;"><div class="impostor-text">SOS EL IMPOSTOR</div></div>`;
+                        } else {
+                            wordEl.innerHTML = `<div class="${blurClass}"><p style="color:#aaa;">Tu artista:</p><img src="${sala.juego.img}" class="artist-img"><br><span class="artist-name-display">${sala.juego.artistName}</span></div>`;
+                        }
+                        if(esHost) document.getElementById('host-next-container').innerHTML = `<br><button onclick="playClick(); reiniciarPartidaOnline()" style="margin-top:20px; width:auto; background:rgba(255,255,255,0.1); border-color:#fff;">NUEVA RONDA</button>`;
                     }
-                    if(esHost && !document.getElementById('btn-next')) {
-                        wordEl.innerHTML += `<br><button id="btn-next" onclick="playClick(); reiniciarPartidaOnline()" style="margin-top:20px; width:auto; background:rgba(255,255,255,0.1); border-color:#fff;">NUEVA RONDA</button>`;
-                    }
-                } else {
-                    navegar('lobby');
+                } else { if(!document.getElementById('reveal').classList.contains('hidden')) navegar('lobby'); }
+            });
+
+            onValue(ref(db, `salas/${codigo}/chat`), (snap) => {
+                const chatDiv = document.getElementById('chat-messages'); chatDiv.innerHTML = "";
+                if(snap.exists()) {
+                    snap.forEach(cs => { const m = cs.val(); chatDiv.innerHTML += `<div class="msg-line"><span class="msg-user" style="color:${getUsernameColor(m.u)}">${m.u}:</span> ${parseEmotes(m.t)}</div>`; });
+                    chatDiv.scrollTop = chatDiv.scrollHeight;
                 }
             });
         }
+
+        window.enviarMensaje = async () => {
+            const nick = document.getElementById('playerNameOnline').value || "User";
+            const sala = document.getElementById('display-codigo').innerText.replace("SALA: ", "");
+            const msg = chatInput.value.trim(); if(!msg || sala === "----") return;
+            await push(ref(db, `salas/${sala}/chat`), { u: nick, t: msg });
+            chatInput.value = ""; hideSuggestions(); chatInput.focus();
+        };
 
         window.comenzarJuegoOnline = async () => {
             const codigo = document.getElementById('display-codigo').innerText.replace("SALA: ", "");
@@ -324,22 +411,23 @@
             let usados = sala.usados || [];
             let disponibles = data[cat].filter(a => !usados.includes(a.name));
             if (disponibles.length === 0) { usados = []; disponibles = data[cat]; }
-
             let artista = disponibles[Math.floor(Math.random()*disponibles.length)];
             const impo = players[Math.floor(Math.random()*players.length)];
-            await set(ref(db, `salas/${codigo}/juego`), { impostor: impo, artistName: artista.name, img: artista.img, activa: true });
-            await set(ref(db, `salas/${codigo}/usados`), [...usados, artista.name]);
+            await update(ref(db, `salas/${codigo}`), { juego: { impostor: impo, artistName: artista.name, img: artista.img, activa: true }, usados: [...usados, artista.name] });
         };
 
-        window.reiniciarPartidaOnline = async () => { const codigo = document.getElementById('display-codigo').innerText.replace("SALA: ", ""); await remove(ref(db, `salas/${codigo}/juego`)); };
-        window.cerrarSala = async () => { if(confirm("¿Eliminar sala definitivamente?")) { const codigo = document.getElementById('display-codigo').innerText.replace("SALA: ", ""); await remove(ref(db, `salas/${codigo}`)); navegar('menu-inicio'); } };
-        
-        window.salirDeSala = () => {
-            if(confirm("¿Seguro que quieres abandonar la sala?")) {
-                navegar('menu-inicio');
-            }
+        window.reiniciarPartidaOnline = async () => { 
+            const codigo = document.getElementById('display-codigo').innerText.replace("SALA: ", ""); 
+            await update(ref(db, `salas/${codigo}/juego`), { activa: false });
         };
+        
+        window.cerrarSala = async () => { 
+            if(confirm("¿Eliminar sala definitivamente?")) { 
+                const codigo = document.getElementById('display-codigo').innerText.replace("SALA: ", ""); 
+                await remove(ref(db, `salas/${codigo}`)); navegar('menu-inicio'); 
+            } 
+        };
+        window.salirDeSala = () => { if(confirm("¿Seguro que quieres abandonar la sala?")) navegar('menu-inicio'); };
     </script>
 </body>
 </html>
-
